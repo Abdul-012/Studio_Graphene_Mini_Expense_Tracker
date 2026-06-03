@@ -78,12 +78,14 @@ function ExpenseForm({ editExpense, onSaved, onCancel }) {
       <form className="expense-form" onSubmit={handleSubmit}>
         <input
           name="title"
+          aria-label="Expense label"
           placeholder="Label (optional)"
           value={formData.title}
           onChange={handleChange}
         />
         <input
           name="amount"
+          aria-label="Expense amount"
           type="number"
           min="0.01"
           step="0.01"
@@ -92,13 +94,14 @@ function ExpenseForm({ editExpense, onSaved, onCancel }) {
           onChange={handleChange}
           required
         />
-        <select name="category" value={formData.category} onChange={handleChange}>
+        <select name="category" aria-label="Expense category" value={formData.category} onChange={handleChange}>
           {categories.map((category) => (
             <option key={category} value={category}>{category}</option>
           ))}
         </select>
         <input
           name="date"
+          aria-label="Expense date"
           type="date"
           value={formData.date}
           onChange={handleChange}
@@ -107,6 +110,7 @@ function ExpenseForm({ editExpense, onSaved, onCancel }) {
         />
         <input
           name="note"
+          aria-label="Expense note"
           placeholder="Note (optional)"
           value={formData.note}
           onChange={handleChange}

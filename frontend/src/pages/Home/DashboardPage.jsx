@@ -78,6 +78,7 @@ function DashboardPage() {
                   <span>{category}</span>
                   <input
                     type="number"
+                    aria-label={`${category} budget`}
                     min="0"
                     step="0.01"
                     value={budgetInputs[category] ?? '0'}

@@ -36,18 +36,19 @@ function TransactionsPage() {
         <div className="filter-grid">
           <input
             name="search"
+            aria-label="Search expenses"
             type="text"
-            placeholder="Search by title"
+            placeholder="Search by label or note"
             value={filters.search}
             onChange={handleFilterChange}
           />
-          <select name="category" value={filters.category} onChange={handleFilterChange}>
+          <select name="category" aria-label="Filter by category" value={filters.category} onChange={handleFilterChange}>
             <option value="">All Categories</option>
             {categories.map((item) => (
               <option key={item} value={item}>{item}</option>
             ))}
           </select>
-          <select name="datePreset" value={filters.datePreset} onChange={handleFilterChange}>
+          <select name="datePreset" aria-label="Filter by date range" value={filters.datePreset} onChange={handleFilterChange}>
             <option value="all">All Dates</option>
             <option value="thisMonth">This Month</option>
             <option value="lastMonth">Last Month</option>
@@ -55,6 +56,7 @@ function TransactionsPage() {
           </select>
           <input
             name="startDate"
+            aria-label="Start date"
             type="date"
             value={filters.startDate}
             onChange={handleFilterChange}
@@ -62,6 +64,7 @@ function TransactionsPage() {
           />
           <input
             name="endDate"
+            aria-label="End date"
             type="date"
             value={filters.endDate}
             onChange={handleFilterChange}
