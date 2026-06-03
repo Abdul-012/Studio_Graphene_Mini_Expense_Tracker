@@ -20,6 +20,28 @@ The app runs locally with only Node.js installed. Deployment-ready config files 
 - Styling: Plain CSS.
 - Testing: Node's built-in test runner for a focused backend API test.
 
+## Requirement Checklist
+
+Must have:
+
+- Add an expense with positive amount, category, date, and optional note.
+- View expenses in a table sorted by newest date first.
+- Edit and delete existing expenses.
+- Filter expenses by category and date range: all dates, this month, last month, or custom dates.
+- Summary panel shows this month's total, category totals, and highest single expense.
+
+Should have:
+
+- Category and monthly spending charts with Recharts.
+- INR currency formatting with `Intl.NumberFormat`.
+- Validation for positive amounts, valid required category, and no future dates.
+
+Bonus:
+
+- CSV export for the current filtered expense set.
+- Per-category budget settings with visual over-budget indicators.
+- JSON file persistence across local server restarts.
+
 ## How to Run Locally
 
 Open two terminals from the repository root.
@@ -326,4 +348,4 @@ expense-tracker/
 
 ## Development Notes
 
-AI assistance was used to refactor, verify, and document the project. No tutorial starter code or copied Stack Overflow snippets were used.
+I used AI assistance for refactoring, verification, and documentation, then reviewed the code and tested the flows listed above. No tutorial starter code or copied Stack Overflow snippets were used.
