@@ -22,6 +22,14 @@ app.use('/api/settings', require('./routes/settings'));
 
 // Health check
 app.get('/', (req, res) => res.json({ message: 'API running' }));
+app.get('/api', (req, res) => {
+  res.json({
+    message: 'Mini Expense Tracker API',
+    health: '/api/health',
+    expenses: '/api/expenses',
+    settings: '/api/settings',
+  });
+});
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
 
 app.use((req, res) => {

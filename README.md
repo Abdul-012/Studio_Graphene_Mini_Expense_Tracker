@@ -6,7 +6,8 @@ Exercise 2 from the Studio Graphene full-stack assessment. This is a single-user
 
 - Public repository: <https://github.com/Abdul-012/Studio_Graphene_Mini_Expense_Tracker>
 - Frontend live demo: <https://studio-graphene-mini-expense-tracke.vercel.app>
-- Backend live API: <https://studio-graphene-mini-expense-tracker.onrender.com/api>
+- Backend health check: <https://studio-graphene-mini-expense-tracker.onrender.com/api/health>
+- Backend API base URL: <https://studio-graphene-mini-expense-tracker.onrender.com/api>
 
 The frontend is deployed on Vercel and the backend API is deployed on Render.
 
@@ -78,6 +79,8 @@ From the repository root, install both apps:
 npm run install:all
 ```
 
+Use Node.js `20.19.0` or newer. The repository includes `.nvmrc` for `nvm` users.
+
 Open two terminals from the repository root.
 
 Backend:
@@ -139,6 +142,19 @@ The deployed app uses Vercel for the frontend and Render for the backend:
 - Deployed base URL: `https://studio-graphene-mini-expense-tracker.onrender.com/api`
 
 ### Health
+
+`GET /`
+
+Response:
+
+```json
+{
+  "message": "Mini Expense Tracker API",
+  "health": "/api/health",
+  "expenses": "/api/expenses",
+  "settings": "/api/settings"
+}
+```
 
 `GET /health`
 

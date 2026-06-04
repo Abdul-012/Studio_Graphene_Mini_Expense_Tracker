@@ -52,6 +52,12 @@ test('expense API covers the assessment expense flow', async (t) => {
     await fs.rm(process.env.EXPENSE_STORE_FILE, { force: true });
   });
 
+  const apiResponse = await request(server, '/api');
+  assert.equal(apiResponse.status, 200);
+  assert.equal(apiResponse.body.health, '/api/health');
+  assert.equal(apiResponse.body.expenses, '/api/expenses');
+  assert.equal(apiResponse.body.settings, '/api/settings');
+
   const createResponse = await request(server, '/api/expenses', {
     method: 'POST',
     body: JSON.stringify({
