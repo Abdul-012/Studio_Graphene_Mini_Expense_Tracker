@@ -2,6 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
+  "description": "React frontend for the Studio Graphene mini expense tracker.",
   "dependencies": {
     "axios": "^1.14.0",
     "react": "^19.2.4",

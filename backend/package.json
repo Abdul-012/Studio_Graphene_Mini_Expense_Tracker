@@ -1,7 +1,7 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "Express API for the Studio Graphene mini expense tracker.",
   "main": "server.js",
   "scripts": {
     "test": "node --test",
@@ -9,7 +9,7 @@
     "dev": "nodemon server.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Abdul Rahman",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
