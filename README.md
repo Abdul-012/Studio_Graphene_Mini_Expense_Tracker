@@ -4,10 +4,11 @@ Exercise 2 from the Studio Graphene full-stack assessment. This is a single-user
 
 ## Live Demo Links
 
-- Frontend: Not redeployed after the assessment-focused changes.
-- Backend: Not redeployed after the assessment-focused changes.
+- Public repository: <https://github.com/Abdul-012/Studio-Graphene-Expense-Tracker>
+- Frontend live demo: Not deployed yet.
+- Backend live API: Not deployed yet.
 
-The app runs locally with only Node.js installed. Deployment-ready config files are included for Vercel (`frontend/vercel.json`) and Render (`render.yaml`).
+Hosted deployment is recommended in the brief, but this submission is focused on the complete local full-stack app. Deployment-ready config files are included for Vercel (`frontend/vercel.json`) and Render (`render.yaml`).
 
 ## Tech Stack
 
@@ -41,6 +42,21 @@ Bonus:
 - CSV export for the current filtered expense set.
 - Per-category budget settings with visual over-budget indicators.
 - JSON file persistence across local server restarts.
+
+## Current Status
+
+Works end-to-end:
+
+- Expense create, read, update, delete.
+- Category and date-range filtering.
+- Monthly summary cards, category totals, highest expense, charts, budgets, and CSV export.
+- JSON persistence across backend restarts.
+- Responsive layout for desktop and mobile.
+
+Not included:
+
+- Hosted frontend/backend deployment.
+- Frontend component tests.
 
 ## How to Run Locally
 
