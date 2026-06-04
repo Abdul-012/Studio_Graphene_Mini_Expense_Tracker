@@ -30,6 +30,7 @@ function CurrencyTooltip({ active, payload, label }) {
 
 function Charts({ summary, monthly }) {
   const pieData = (summary?.byCategory || []).filter((item) => item.total > 0);
+  const hasMonthlyData = (monthly || []).some((item) => Number(item.total || 0) > 0);
 
   return (
     <section className="chart-grid">
@@ -61,7 +62,7 @@ function Charts({ summary, monthly }) {
 
       <article className="panel chart-card">
         <h3>Last 6 Months</h3>
-        {monthly.length ? (
+        {hasMonthlyData ? (
           <ResponsiveContainer width="100%" height={280}>
             <BarChart data={monthly}>
               <XAxis dataKey="month" tick={{ fill: '#1f2937', fontSize: 12 }} />

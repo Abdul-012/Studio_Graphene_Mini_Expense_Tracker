@@ -472,6 +472,17 @@ button:disabled:hover {
   background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
 }
 
+.recharts-default-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 16px;
+}
+
+.recharts-default-legend .recharts-legend-item {
+  margin-right: 0 !important;
+}
+
 .chart-tooltip {
   display: grid;
   gap: 4px;
