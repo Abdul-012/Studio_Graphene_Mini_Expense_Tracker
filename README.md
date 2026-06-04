@@ -12,14 +12,14 @@ Hosted deployment is recommended in the brief, but this submission is focused on
 
 ## Tech Stack
 
-- Frontend: React with Vite for a fast local dev/build flow.
-- Routing: React Router for dashboard, transactions, add/edit, analytics, and export views.
-- Charts: Recharts for category and monthly spending charts.
-- API Client: Axios for REST calls.
-- Backend: Node.js and Express.
-- Storage: JSON file persistence at `backend/data/expense-store.json`, created automatically on first run.
-- Styling: Plain CSS.
-- Testing: Node's built-in test runner for a focused backend API test.
+- Frontend: React with Vite, chosen for a simple component-based UI and fast local dev/build flow.
+- Routing: React Router, used for dashboard, transactions, add/edit, analytics, and export views.
+- Charts: Recharts, used for category and monthly spending charts without hand-rolling chart logic.
+- API Client: Axios, used to keep REST calls centralized and consistent.
+- Backend: Node.js and Express, used for a small REST API with straightforward routing and middleware.
+- Storage: JSON file persistence at `backend/data/expense-store.json`, created automatically on first run so no external database setup is required.
+- Styling: Plain CSS, used to keep the UI lightweight and easy to review.
+- Testing: Node's built-in test runner, used for a focused backend API flow test.
 
 ## Features
 
@@ -73,14 +73,18 @@ Not included:
 
 ## How to Run Locally
 
+From the repository root, install both apps:
+
+```bash
+npm run install:all
+```
+
 Open two terminals from the repository root.
 
 Backend:
 
 ```bash
-cd backend
-npm install
-npm start
+npm run backend:start
 ```
 
 The backend runs at `http://localhost:5000`.
@@ -88,9 +92,7 @@ The backend runs at `http://localhost:5000`.
 Frontend:
 
 ```bash
-cd frontend
-npm install
-npm start
+npm run frontend:start
 ```
 
 The frontend runs at `http://localhost:3000`.
@@ -110,19 +112,27 @@ VITE_API_URL=http://localhost:5051/api
 
 Then start the frontend again.
 
-Run the backend test:
+Run the backend test and frontend production build together:
 
 ```bash
-cd backend
-npm test
+npm run verify
 ```
 
-Build the frontend:
+Or run them separately:
 
 ```bash
-cd frontend
-npm run build
+npm run backend:test
+npm run frontend:build
 ```
+
+## Deployment Notes
+
+Deployment is not required to run the app locally, but the project includes config for common hosts:
+
+- Backend: `render.yaml` deploys the Express API from the `backend` folder. Set `CLIENT_URL` to the deployed frontend URL.
+- Frontend: `frontend/vercel.json` supports React Router client-side routing on Vercel.
+- Frontend API URL: set `VITE_API_URL` to the deployed backend API base URL, for example `https://your-api.onrender.com/api`.
+- Persistence: local JSON persistence is stored at `backend/data/expense-store.json`. On hosted platforms, use a persistent disk or move storage to SQLite/PostgreSQL if data must survive redeploys.
 
 ## API Documentation
 
@@ -289,7 +299,13 @@ Response:
 
 `GET /expenses/export`
 
-Accepts the same filter query parameters as `GET /expenses` and returns a CSV download with date, label, category, amount, and note.
+Accepts the same filter query parameters as `GET /expenses` and returns a CSV download.
+
+Response:
+
+- `Content-Type`: `text/csv`
+- Filename: `expenses.csv`
+- Columns: `Date`, `Label`, `Category`, `Amount`, `Note`
 
 ### Settings
 
@@ -374,7 +390,3 @@ Studio_Graphene_Mini_Expense_Tracker/
 - Add frontend component tests for form validation and filter behavior.
 - Add inline table editing or a modal edit flow to reduce navigation.
 - Replace the JSON file with SQLite if multi-user support or stronger querying becomes necessary.
-
-## Development Notes
-
-I used AI assistance for refactoring, verification, and documentation, then reviewed the code and tested the flows listed above. No tutorial starter code or copied Stack Overflow snippets were used.
