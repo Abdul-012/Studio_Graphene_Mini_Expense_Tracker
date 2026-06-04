@@ -14,7 +14,9 @@ function ExportPage() {
       <section className="panel export-panel">
         <p>{`Current month total: ${formatCurrency(summary.total)}`}</p>
         <p>{`Records matching current filters: ${totalRecords}`}</p>
-        <button type="button" onClick={handleCsvExport}>Download CSV</button>
+        <button type="button" onClick={handleCsvExport}>
+          Download CSV
+        </button>
       </section>
 
       <section className="panel">

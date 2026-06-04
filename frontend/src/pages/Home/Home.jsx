@@ -14,7 +14,7 @@ const emptyFilters = {
   category: '',
   datePreset: 'all',
   startDate: '',
-  endDate: ''
+  endDate: '',
 };
 
 const getPresetRange = (preset) => {
@@ -23,20 +23,20 @@ const getPresetRange = (preset) => {
   if (preset === 'thisMonth') {
     return {
       startDate: toDateOnly(new Date(now.getFullYear(), now.getMonth(), 1)),
-      endDate: toDateOnly(now)
+      endDate: toDateOnly(now),
     };
   }
 
   if (preset === 'lastMonth') {
     return {
       startDate: toDateOnly(new Date(now.getFullYear(), now.getMonth() - 1, 1)),
-      endDate: toDateOnly(new Date(now.getFullYear(), now.getMonth(), 0))
+      endDate: toDateOnly(new Date(now.getFullYear(), now.getMonth(), 0)),
     };
   }
 
   return {
     startDate: '',
-    endDate: ''
+    endDate: '',
   };
 };
 
@@ -50,7 +50,7 @@ function Home() {
     byCategory: [],
     budgetStatus: [],
     overBudgetCategories: [],
-    topExpense: null
+    topExpense: null,
   });
   const [monthly, setMonthly] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -80,7 +80,7 @@ function Home() {
       const [expenseRes, summaryRes, monthlyRes] = await Promise.all([
         API.get('/expenses', { params }),
         API.get('/expenses/summary'),
-        API.get('/expenses/monthly')
+        API.get('/expenses/monthly'),
       ]);
 
       setExpenses(expenseRes.data.expenses || []);
@@ -103,8 +103,11 @@ function Home() {
     setBudgetInputs({
       ...emptyCategoryBudgets,
       ...Object.fromEntries(
-        Object.entries(summary.categoryBudgets || {}).map(([category, value]) => [category, String(value || 0)])
-      )
+        Object.entries(summary.categoryBudgets || {}).map(([category, value]) => [
+          category,
+          String(value || 0),
+        ])
+      ),
     });
   }, [summary.categoryBudgets]);
 
@@ -115,7 +118,7 @@ function Home() {
       setFilters((prev) => ({
         ...prev,
         datePreset: value,
-        ...getPresetRange(value)
+        ...getPresetRange(value),
       }));
       setPage(1);
       return;
@@ -124,7 +127,7 @@ function Home() {
     setFilters((prev) => ({
       ...prev,
       [name]: value,
-      datePreset: name === 'startDate' || name === 'endDate' ? 'custom' : prev.datePreset
+      datePreset: name === 'startDate' || name === 'endDate' ? 'custom' : prev.datePreset,
     }));
     setPage(1);
   };
@@ -222,7 +225,7 @@ function Home() {
   const handleBudgetInputChange = (category, value) => {
     setBudgetInputs((prev) => ({
       ...prev,
-      [category]: value
+      [category]: value,
     }));
   };
 
@@ -250,7 +253,7 @@ function Home() {
     handleSavedExpense,
     handleCsvExport,
     handleUpdateBudget,
-    refreshData: fetchData
+    refreshData: fetchData,
   };
 
   return (
@@ -262,23 +265,37 @@ function Home() {
         </div>
 
         <nav className="nav-links">
-          <NavLink to="/dashboard" className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}>
+          <NavLink
+            to="/dashboard"
+            className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}
+          >
             Dashboard
           </NavLink>
-          <NavLink to="/transactions" className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}>
+          <NavLink
+            to="/transactions"
+            className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}
+          >
             Transactions
           </NavLink>
-          <NavLink to="/add" className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}>
+          <NavLink
+            to="/add"
+            className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}
+          >
             Add New Expense
           </NavLink>
-          <NavLink to="/analytics" className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}>
+          <NavLink
+            to="/analytics"
+            className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}
+          >
             Analytics
           </NavLink>
-          <NavLink to="/export" className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}>
+          <NavLink
+            to="/export"
+            className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}
+          >
             Export CSV
           </NavLink>
         </nav>
-
       </header>
 
       {error ? <p className="error-text global-error">{error}</p> : null}

@@ -7,7 +7,7 @@ const {
   deleteExpense,
   getSummary,
   getMonthly,
-  exportCsv
+  exportCsv,
 } = require('../controllers/expenseController');
 
 const router = express.Router();
@@ -16,13 +16,8 @@ router.get('/summary', getSummary);
 router.get('/monthly', getMonthly);
 router.get('/export', exportCsv);
 
-router.route('/')
-  .get(getExpenses)
-  .post(createExpense);
+router.route('/').get(getExpenses).post(createExpense);
 
-router.route('/:id')
-  .get(getExpenseById)
-  .put(updateExpense)
-  .delete(deleteExpense);
+router.route('/:id').get(getExpenseById).put(updateExpense).delete(deleteExpense);
 
 module.exports = router;

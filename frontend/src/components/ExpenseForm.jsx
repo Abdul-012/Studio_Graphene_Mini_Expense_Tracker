@@ -8,7 +8,7 @@ const initialState = {
   amount: '',
   category: 'Food',
   date: todayDateOnly(),
-  note: ''
+  note: '',
 };
 
 function ExpenseForm({ editExpense, onSaved, onCancel }) {
@@ -27,7 +27,7 @@ function ExpenseForm({ editExpense, onSaved, onCancel }) {
       amount: editExpense.amount || '',
       category: editExpense.category || 'Food',
       date: editExpense.date ? String(editExpense.date).slice(0, 10) : initialState.date,
-      note: editExpense.note || ''
+      note: editExpense.note || '',
     });
   }, [editExpense]);
 
@@ -44,7 +44,7 @@ function ExpenseForm({ editExpense, onSaved, onCancel }) {
     try {
       const payload = {
         ...formData,
-        amount: Number(formData.amount)
+        amount: Number(formData.amount),
       };
 
       if (editExpense?._id) {
@@ -94,9 +94,16 @@ function ExpenseForm({ editExpense, onSaved, onCancel }) {
           onChange={handleChange}
           required
         />
-        <select name="category" aria-label="Expense category" value={formData.category} onChange={handleChange}>
+        <select
+          name="category"
+          aria-label="Expense category"
+          value={formData.category}
+          onChange={handleChange}
+        >
           {categories.map((category) => (
-            <option key={category} value={category}>{category}</option>
+            <option key={category} value={category}>
+              {category}
+            </option>
           ))}
         </select>
         <input

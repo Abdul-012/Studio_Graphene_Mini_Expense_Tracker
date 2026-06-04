@@ -10,6 +10,11 @@
     "backend:test": "npm test --prefix backend",
     "frontend:start": "npm start --prefix frontend",
     "frontend:build": "npm run build --prefix frontend",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "verify": "npm run backend:test && npm run frontend:build"
+  },
+  "devDependencies": {
+    "prettier": "^3.8.3"
   }
 }

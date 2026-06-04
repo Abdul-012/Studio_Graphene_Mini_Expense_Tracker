@@ -15,10 +15,18 @@ function AnalyticsPage() {
       </div>
 
       {loading ? (
-        <section className="panel"><p>Loading chart data...</p></section>
+        <section className="panel">
+          <p>Loading chart data...</p>
+        </section>
       ) : (
         <>
-          <Suspense fallback={<section className="panel"><p>Loading charts...</p></section>}>
+          <Suspense
+            fallback={
+              <section className="panel">
+                <p>Loading charts...</p>
+              </section>
+            }
+          >
             <Charts summary={summary} monthly={monthly} />
           </Suspense>
           <section className="panel stats-list">

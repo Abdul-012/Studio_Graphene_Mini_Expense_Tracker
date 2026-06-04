@@ -23,11 +23,12 @@ const dateOnlyFromInput = (value) => {
   return dateOnly;
 };
 
-const sortExpenses = (expenses) => expenses.sort((a, b) => {
-  const byDate = String(b.date).localeCompare(String(a.date));
-  if (byDate !== 0) return byDate;
-  return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-});
+const sortExpenses = (expenses) =>
+  expenses.sort((a, b) => {
+    const byDate = String(b.date).localeCompare(String(a.date));
+    if (byDate !== 0) return byDate;
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+  });
 
 const validateExpense = (body, { partial = false } = {}) => {
   const next = {};
@@ -118,10 +119,15 @@ const filterExpenses = (expenses, query) => {
 
   if (search) {
     const needle = String(search).trim().toLowerCase();
-    filtered = filtered.filter((expense) => (
-      String(expense.title || '').toLowerCase().includes(needle)
-      || String(expense.note || '').toLowerCase().includes(needle)
-    ));
+    filtered = filtered.filter(
+      (expense) =>
+        String(expense.title || '')
+          .toLowerCase()
+          .includes(needle) ||
+        String(expense.note || '')
+          .toLowerCase()
+          .includes(needle)
+    );
   }
 
   return { expenses: sortExpenses(filtered) };
@@ -129,11 +135,11 @@ const filterExpenses = (expenses, query) => {
 
 const getCategoryBudgets = (settings = {}) => ({
   ...DEFAULT_CATEGORY_BUDGETS,
-  ...(settings.categoryBudgets || {})
+  ...(settings.categoryBudgets || {}),
 });
 
-const buildCategoryTotals = (expenses, categoryBudgets = DEFAULT_CATEGORY_BUDGETS) => CATEGORIES
-  .map((category) => {
+const buildCategoryTotals = (expenses, categoryBudgets = DEFAULT_CATEGORY_BUDGETS) =>
+  CATEGORIES.map((category) => {
     const total = expenses
       .filter((expense) => expense.category === category)
       .reduce((sum, expense) => sum + Number(expense.amount || 0), 0);
@@ -144,11 +150,11 @@ const buildCategoryTotals = (expenses, categoryBudgets = DEFAULT_CATEGORY_BUDGET
       total,
       budget,
       exceeded: budget > 0 && total > budget,
-      percentUsed: budget > 0 ? Math.round((total / budget) * 100) : 0
+      percentUsed: budget > 0 ? Math.round((total / budget) * 100) : 0,
     };
   })
-  .filter((item) => item.total > 0 || item.budget > 0)
-  .sort((a, b) => b.total - a.total);
+    .filter((item) => item.total > 0 || item.budget > 0)
+    .sort((a, b) => b.total - a.total);
 
 const createExpense = async (req, res) => {
   try {
@@ -167,7 +173,7 @@ const createExpense = async (req, res) => {
       date: validation.value.date,
       note: validation.value.note || '',
       createdAt: now,
-      updatedAt: now
+      updatedAt: now,
     };
 
     store.expenses.push(expense);
@@ -199,7 +205,7 @@ const getExpenses = async (req, res) => {
       total,
       page,
       limit,
-      totalPages
+      totalPages,
     });
   } catch (error) {
     return res.status(500).json({ message: error.message });
@@ -238,7 +244,7 @@ const updateExpense = async (req, res) => {
     const updated = {
       ...store.expenses[index],
       ...validation.value,
-      updatedAt: new Date().toISOString()
+      updatedAt: new Date().toISOString(),
     };
 
     if (!updated.title) {
@@ -277,10 +283,15 @@ const getSummary = async (req, res) => {
     const now = new Date();
     const startOfMonth = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-01`;
     const today = todayDateOnly();
-    const monthExpenses = store.expenses.filter((expense) => expense.date >= startOfMonth && expense.date <= today);
+    const monthExpenses = store.expenses.filter(
+      (expense) => expense.date >= startOfMonth && expense.date <= today
+    );
     const total = monthExpenses.reduce((sum, expense) => sum + Number(expense.amount || 0), 0);
     const categoryBudgets = getCategoryBudgets(store.settings);
-    const budget = Object.values(categoryBudgets).reduce((sum, value) => sum + Number(value || 0), 0);
+    const budget = Object.values(categoryBudgets).reduce(
+      (sum, value) => sum + Number(value || 0),
+      0
+    );
     const categoryTotals = buildCategoryTotals(monthExpenses, categoryBudgets);
     const budgetStatus = CATEGORIES.map((category) => {
       const totalForCategory = categoryTotals.find((item) => item._id === category)?.total || 0;
@@ -291,7 +302,8 @@ const getSummary = async (req, res) => {
         total: totalForCategory,
         budget: budgetForCategory,
         exceeded: budgetForCategory > 0 && totalForCategory > budgetForCategory,
-        percentUsed: budgetForCategory > 0 ? Math.round((totalForCategory / budgetForCategory) * 100) : 0
+        percentUsed:
+          budgetForCategory > 0 ? Math.round((totalForCategory / budgetForCategory) * 100) : 0,
       };
     });
     const overBudgetCategories = budgetStatus.filter((item) => item.exceeded);
@@ -309,7 +321,7 @@ const getSummary = async (req, res) => {
       byCategory: categoryTotals,
       budgetStatus,
       overBudgetCategories,
-      topExpense
+      topExpense,
     });
   } catch (error) {
     return res.status(500).json({ message: error.message });
@@ -328,7 +340,7 @@ const getMonthly = async (req, res) => {
       buckets.push({
         key,
         month: `${MONTH_NAMES[date.getMonth()]} ${date.getFullYear()}`,
-        total: 0
+        total: 0,
       });
     }
 
@@ -369,11 +381,9 @@ const exportCsv = async (req, res) => {
       expense.title,
       expense.category,
       Number(expense.amount || 0).toFixed(2),
-      expense.note
+      expense.note,
     ]);
-    const csv = [headers, ...rows]
-      .map((row) => row.map(escapeCsv).join(','))
-      .join('\n');
+    const csv = [headers, ...rows].map((row) => row.map(escapeCsv).join(',')).join('\n');
 
     res.header('Content-Type', 'text/csv');
     res.attachment('expenses.csv');
@@ -392,5 +402,5 @@ module.exports = {
   deleteExpense,
   getSummary,
   getMonthly,
-  exportCsv
+  exportCsv,
 };

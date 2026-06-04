@@ -1,8 +1,5 @@
 const express = require('express');
-const {
-  getSettings,
-  updateCategoryBudgets
-} = require('../controllers/settingsController');
+const { getSettings, updateCategoryBudgets } = require('../controllers/settingsController');
 
 const router = express.Router();
 

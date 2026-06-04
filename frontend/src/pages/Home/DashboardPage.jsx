@@ -14,7 +14,7 @@ function DashboardPage() {
     budgetInputs,
     savingBudget,
     handleBudgetInputChange,
-    handleUpdateBudget
+    handleUpdateBudget,
   } = useOutletContext();
   const overBudgetNames = (summary.overBudgetCategories || []).map((item) => item._id).join(', ');
   const budgetStatusByCategory = Object.fromEntries(
@@ -29,9 +29,7 @@ function DashboardPage() {
       </div>
 
       {summary.exceeded ? (
-        <div className="alert danger">
-          {`Budget exceeded in ${overBudgetNames}.`}
-        </div>
+        <div className="alert danger">{`Budget exceeded in ${overBudgetNames}.`}</div>
       ) : summary.percentUsed > 80 ? (
         <div className="alert warning">
           {`Warning: ${summary.percentUsed}% of total category budget already used.`}
@@ -66,7 +64,10 @@ function DashboardPage() {
             const status = budgetStatusByCategory[category] || { total: 0, exceeded: false };
 
             return (
-              <article key={category} className={status.exceeded ? 'category-total-item exceeded' : 'category-total-item'}>
+              <article
+                key={category}
+                className={status.exceeded ? 'category-total-item exceeded' : 'category-total-item'}
+              >
                 <span>{category}</span>
                 <strong>{formatCurrency(status.total)}</strong>
               </article>
@@ -76,10 +77,18 @@ function DashboardPage() {
       </section>
 
       <div className="dashboard-top-actions">
-        <Link to="/add" className="action-link">Add New Expense</Link>
+        <Link to="/add" className="action-link">
+          Add New Expense
+        </Link>
       </div>
 
-      <Suspense fallback={<section className="panel"><p>Loading charts...</p></section>}>
+      <Suspense
+        fallback={
+          <section className="panel">
+            <p>Loading charts...</p>
+          </section>
+        }
+      >
         <Charts summary={summary} monthly={monthly} />
       </Suspense>
 
@@ -88,10 +97,18 @@ function DashboardPage() {
         <form className="category-budget-form" onSubmit={handleUpdateBudget}>
           <div className="category-budget-grid">
             {categories.map((category) => {
-              const status = budgetStatusByCategory[category] || { total: 0, budget: 0, exceeded: false, percentUsed: 0 };
+              const status = budgetStatusByCategory[category] || {
+                total: 0,
+                budget: 0,
+                exceeded: false,
+                percentUsed: 0,
+              };
 
               return (
-                <label key={category} className={status.exceeded ? 'budget-item exceeded' : 'budget-item'}>
+                <label
+                  key={category}
+                  className={status.exceeded ? 'budget-item exceeded' : 'budget-item'}
+                >
                   <span>{category}</span>
                   <input
                     type="number"

@@ -28,16 +28,16 @@ const request = async (server, pathName, options = {}) => {
   const response = await fetch(`http://127.0.0.1:${port}${pathName}`, {
     headers: {
       'Content-Type': 'application/json',
-      ...options.headers
+      ...options.headers,
     },
-    ...options
+    ...options,
   });
   const text = await response.text();
   const body = text ? JSON.parse(text) : null;
 
   return {
     status: response.status,
-    body
+    body,
   };
 };
 
@@ -59,8 +59,8 @@ test('expense API covers the assessment expense flow', async (t) => {
       amount: 250.5,
       category: 'Food',
       date: today,
-      note: 'Team meal'
-    })
+      note: 'Team meal',
+    }),
   });
 
   assert.equal(createResponse.status, 201);
@@ -73,8 +73,8 @@ test('expense API covers the assessment expense flow', async (t) => {
       title: 'Metro',
       amount: 75,
       category: 'Transport',
-      date: yesterday
-    })
+      date: yesterday,
+    }),
   });
 
   assert.equal(travelResponse.status, 201);
@@ -94,7 +94,10 @@ test('expense API covers the assessment expense flow', async (t) => {
   assert.equal(categoryFilterResponse.body.total, 1);
   assert.equal(categoryFilterResponse.body.expenses[0].category, 'Food');
 
-  const dateFilterResponse = await request(server, `/api/expenses?startDate=${today}&endDate=${today}`);
+  const dateFilterResponse = await request(
+    server,
+    `/api/expenses?startDate=${today}&endDate=${today}`
+  );
   assert.equal(dateFilterResponse.status, 200);
   assert.equal(dateFilterResponse.body.total, 1);
   assert.equal(dateFilterResponse.body.expenses[0].date, today);
@@ -104,8 +107,8 @@ test('expense API covers the assessment expense flow', async (t) => {
     body: JSON.stringify({
       amount: 95,
       category: 'Bills',
-      note: 'Updated bill'
-    })
+      note: 'Updated bill',
+    }),
   });
 
   assert.equal(updateResponse.status, 200);
@@ -124,9 +127,9 @@ test('expense API covers the assessment expense flow', async (t) => {
     method: 'PUT',
     body: JSON.stringify({
       categoryBudgets: {
-        Food: 200
-      }
-    })
+        Food: 200,
+      },
+    }),
   });
 
   assert.equal(budgetResponse.status, 200);
@@ -137,7 +140,9 @@ test('expense API covers the assessment expense flow', async (t) => {
   assert.equal(exceededSummaryResponse.body.exceeded, true);
   assert.equal(exceededSummaryResponse.body.overBudgetCategories[0]._id, 'Food');
 
-  const csvResponse = await fetch(`http://127.0.0.1:${server.address().port}/api/expenses/export?category=Food`);
+  const csvResponse = await fetch(
+    `http://127.0.0.1:${server.address().port}/api/expenses/export?category=Food`
+  );
   const csv = await csvResponse.text();
   assert.equal(csvResponse.status, 200);
   assert.match(csv, /^Date,Label,Category,Amount,Note/);
@@ -148,8 +153,8 @@ test('expense API covers the assessment expense flow', async (t) => {
     body: JSON.stringify({
       amount: -1,
       category: 'Food',
-      date: today
-    })
+      date: today,
+    }),
   });
 
   assert.equal(invalidResponse.status, 400);
@@ -160,8 +165,8 @@ test('expense API covers the assessment expense flow', async (t) => {
     body: JSON.stringify({
       amount: 10,
       category: 'Food',
-      date: tomorrow
-    })
+      date: tomorrow,
+    }),
   });
 
   assert.equal(futureDateResponse.status, 400);
@@ -171,15 +176,15 @@ test('expense API covers the assessment expense flow', async (t) => {
     method: 'POST',
     body: JSON.stringify({
       amount: 10,
-      date: today
-    })
+      date: today,
+    }),
   });
 
   assert.equal(missingCategoryResponse.status, 400);
   assert.match(missingCategoryResponse.body.message, /category is required/);
 
   const deleteResponse = await request(server, `/api/expenses/${travelResponse.body._id}`, {
-    method: 'DELETE'
+    method: 'DELETE',
   });
 
   assert.equal(deleteResponse.status, 200);

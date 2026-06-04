@@ -1,8 +1,8 @@
 const { readStore, writeStore } = require('../dataStore');
 const { CATEGORIES, DEFAULT_CATEGORY_BUDGETS } = require('../constants');
 
-const totalBudget = (categoryBudgets) => Object.values(categoryBudgets)
-  .reduce((sum, value) => sum + Number(value || 0), 0);
+const totalBudget = (categoryBudgets) =>
+  Object.values(categoryBudgets).reduce((sum, value) => sum + Number(value || 0), 0);
 
 const validateCategoryBudgets = (incoming = {}, existing = DEFAULT_CATEGORY_BUDGETS) => {
   if (!incoming || typeof incoming !== 'object' || Array.isArray(incoming)) {
@@ -11,7 +11,7 @@ const validateCategoryBudgets = (incoming = {}, existing = DEFAULT_CATEGORY_BUDG
 
   const next = {
     ...DEFAULT_CATEGORY_BUDGETS,
-    ...existing
+    ...existing,
   };
 
   for (const [category, rawValue] of Object.entries(incoming)) {
@@ -40,7 +40,7 @@ const getSettings = async (req, res) => {
     const store = await readStore();
     return res.status(200).json({
       categoryBudgets: store.settings.categoryBudgets,
-      totalBudget: totalBudget(store.settings.categoryBudgets)
+      totalBudget: totalBudget(store.settings.categoryBudgets),
     });
   } catch (error) {
     return res.status(500).json({ message: error.message });
@@ -50,7 +50,10 @@ const getSettings = async (req, res) => {
 const updateCategoryBudgets = async (req, res) => {
   try {
     const store = await readStore();
-    const validation = validateCategoryBudgets(req.body.categoryBudgets, store.settings.categoryBudgets);
+    const validation = validateCategoryBudgets(
+      req.body.categoryBudgets,
+      store.settings.categoryBudgets
+    );
 
     if (validation.error) {
       return res.status(400).json({ message: validation.error });
@@ -63,8 +66,8 @@ const updateCategoryBudgets = async (req, res) => {
       message: 'Category budgets updated',
       settings: {
         categoryBudgets: store.settings.categoryBudgets,
-        totalBudget: totalBudget(store.settings.categoryBudgets)
-      }
+        totalBudget: totalBudget(store.settings.categoryBudgets),
+      },
     });
   } catch (error) {
     return res.status(500).json({ message: error.message });
@@ -73,5 +76,5 @@ const updateCategoryBudgets = async (req, res) => {
 
 module.exports = {
   getSettings,
-  updateCategoryBudgets
+  updateCategoryBudgets,
 };

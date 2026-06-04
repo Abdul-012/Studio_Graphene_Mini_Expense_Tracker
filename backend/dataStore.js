@@ -10,23 +10,24 @@ const DATA_FILE = process.env.EXPENSE_STORE_FILE
 const DEFAULT_STORE = {
   expenses: [],
   settings: {
-    categoryBudgets: DEFAULT_CATEGORY_BUDGETS
-  }
+    categoryBudgets: DEFAULT_CATEGORY_BUDGETS,
+  },
 };
 
-const normalizeCategoryBudgets = (budgets = {}) => Object.keys(DEFAULT_CATEGORY_BUDGETS).reduce((normalized, category) => {
-  const value = Number(budgets?.[category]);
-  return {
-    ...normalized,
-    [category]: Number.isNaN(value) || value < 0 ? 0 : value
-  };
-}, {});
+const normalizeCategoryBudgets = (budgets = {}) =>
+  Object.keys(DEFAULT_CATEGORY_BUDGETS).reduce((normalized, category) => {
+    const value = Number(budgets?.[category]);
+    return {
+      ...normalized,
+      [category]: Number.isNaN(value) || value < 0 ? 0 : value,
+    };
+  }, {});
 
 const normalizeStore = (store) => ({
   expenses: Array.isArray(store?.expenses) ? store.expenses : [],
   settings: {
-    categoryBudgets: normalizeCategoryBudgets(store?.settings?.categoryBudgets)
-  }
+    categoryBudgets: normalizeCategoryBudgets(store?.settings?.categoryBudgets),
+  },
 });
 
 const ensureStore = async () => {
@@ -54,5 +55,5 @@ const writeStore = async (store) => {
 
 module.exports = {
   readStore,
-  writeStore
+  writeStore,
 };

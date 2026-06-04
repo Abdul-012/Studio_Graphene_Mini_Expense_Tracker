@@ -14,7 +14,7 @@ function TransactionsPage() {
     handleFilterChange,
     clearFilters,
     startEditExpense,
-    handleDeleteExpense
+    handleDeleteExpense,
   } = useOutletContext();
 
   const navigate = useNavigate();
@@ -42,13 +42,25 @@ function TransactionsPage() {
             value={filters.search}
             onChange={handleFilterChange}
           />
-          <select name="category" aria-label="Filter by category" value={filters.category} onChange={handleFilterChange}>
+          <select
+            name="category"
+            aria-label="Filter by category"
+            value={filters.category}
+            onChange={handleFilterChange}
+          >
             <option value="">All Categories</option>
             {categories.map((item) => (
-              <option key={item} value={item}>{item}</option>
+              <option key={item} value={item}>
+                {item}
+              </option>
             ))}
           </select>
-          <select name="datePreset" aria-label="Filter by date range" value={filters.datePreset} onChange={handleFilterChange}>
+          <select
+            name="datePreset"
+            aria-label="Filter by date range"
+            value={filters.datePreset}
+            onChange={handleFilterChange}
+          >
             <option value="all">All Dates</option>
             <option value="thisMonth">This Month</option>
             <option value="lastMonth">Last Month</option>
@@ -70,12 +82,16 @@ function TransactionsPage() {
             onChange={handleFilterChange}
             disabled={filters.datePreset !== 'custom'}
           />
-          <button type="button" className="ghost-btn" onClick={clearFilters}>Reset</button>
+          <button type="button" className="ghost-btn" onClick={clearFilters}>
+            Reset
+          </button>
         </div>
       </section>
 
       {loading ? (
-        <section className="panel"><p>Loading expenses...</p></section>
+        <section className="panel">
+          <p>Loading expenses...</p>
+        </section>
       ) : (
         <ExpenseList
           expenses={expenses}
@@ -86,11 +102,19 @@ function TransactionsPage() {
       )}
 
       <footer className="pagination-row">
-        <button type="button" onClick={() => setPage((prev) => Math.max(1, prev - 1))} disabled={page <= 1}>
+        <button
+          type="button"
+          onClick={() => setPage((prev) => Math.max(1, prev - 1))}
+          disabled={page <= 1}
+        >
           Previous
         </button>
         <span>{`Page ${page} of ${totalPages}`}</span>
-        <button type="button" onClick={() => setPage((prev) => Math.min(totalPages, prev + 1))} disabled={page >= totalPages}>
+        <button
+          type="button"
+          onClick={() => setPage((prev) => Math.min(totalPages, prev + 1))}
+          disabled={page >= totalPages}
+        >
           Next
         </button>
       </footer>
