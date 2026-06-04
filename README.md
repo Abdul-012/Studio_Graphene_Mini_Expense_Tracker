@@ -1,10 +1,10 @@
-# Mini Expense Tracker
+# Studio Graphene Mini Expense Tracker
 
 Exercise 2 from the Studio Graphene full-stack assessment. This is a single-user expense tracker where a user can add, view, edit, delete, filter, summarize, chart, set per-category budgets, and export daily spending records without authentication.
 
 ## Live Demo Links
 
-- Public repository: <https://github.com/Abdul-012/Studio-Graphene-Expense-Tracker>
+- Public repository: <https://github.com/Abdul-012/Studio_Graphene_Mini_Expense_Tracker>
 - Frontend live demo: Not deployed yet.
 - Backend live API: Not deployed yet.
 
@@ -20,6 +20,19 @@ Hosted deployment is recommended in the brief, but this submission is focused on
 - Storage: JSON file persistence at `backend/data/expense-store.json`, created automatically on first run.
 - Styling: Plain CSS.
 - Testing: Node's built-in test runner for a focused backend API test.
+
+## Features
+
+- Add daily expenses with amount, category, date, optional label, and optional note.
+- View all expenses in a paginated table sorted by newest date first.
+- Edit and delete existing expense records.
+- Filter transactions by category, this month, last month, or a custom date range.
+- See current-month totals, category totals, highest expense, and recent expenses on the dashboard.
+- View spending charts for category breakdown and the last six months.
+- Format all amounts consistently in INR.
+- Set a budget for each category and see visual warnings when spending exceeds it.
+- Export the currently filtered expense list as a CSV file.
+- Persist expenses and budget settings to a local JSON file.
 
 ## Requirement Checklist
 
@@ -337,7 +350,7 @@ Response:
 ## Project Structure
 
 ```text
-expense-tracker/
+Studio_Graphene_Mini_Expense_Tracker/
   backend/
     controllers/       Express request handlers
     routes/            API route definitions

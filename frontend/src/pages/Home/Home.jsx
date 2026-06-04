@@ -257,7 +257,7 @@ function Home() {
     <div className="app-shell">
       <header className="top-nav">
         <div className="brand">
-          <h1>Mini Expense Tracker</h1>
+          <h1>Studio Graphene Mini Expense Tracker</h1>
           <p>Single-user spending dashboard</p>
         </div>
 
