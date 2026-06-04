@@ -5,10 +5,10 @@ Exercise 2 from the Studio Graphene full-stack assessment. This is a single-user
 ## Live Demo Links
 
 - Public repository: <https://github.com/Abdul-012/Studio_Graphene_Mini_Expense_Tracker>
-- Frontend live demo: Not deployed yet.
-- Backend live API: Not deployed yet.
+- Frontend live demo: <https://studio-graphene-mini-expense-tracke.vercel.app>
+- Backend live API: <https://studio-graphene-mini-expense-tracker.onrender.com/api>
 
-Hosted deployment is recommended in the brief, but this submission is focused on the complete local full-stack app. Deployment-ready config files are included for Vercel (`frontend/vercel.json`) and Render (`render.yaml`).
+The frontend is deployed on Vercel and the backend API is deployed on Render.
 
 ## Tech Stack
 
@@ -68,7 +68,6 @@ Works end-to-end:
 
 Not included:
 
-- Hosted frontend/backend deployment.
 - Frontend component tests.
 
 ## How to Run Locally
@@ -127,7 +126,7 @@ npm run frontend:build
 
 ## Deployment Notes
 
-Deployment is not required to run the app locally, but the project includes config for common hosts:
+The deployed app uses Vercel for the frontend and Render for the backend:
 
 - Backend: `render.yaml` deploys the Express API from the `backend` folder. Set `CLIENT_URL` to the deployed frontend URL.
 - Frontend: `frontend/vercel.json` supports React Router client-side routing on Vercel.
@@ -386,7 +385,6 @@ Studio_Graphene_Mini_Expense_Tracker/
 
 ## Next Steps
 
-- Deploy the updated frontend and backend, then add the final public URLs here.
 - Add frontend component tests for form validation and filter behavior.
 - Add inline table editing or a modal edit flow to reduce navigation.
 - Replace the JSON file with SQLite if multi-user support or stronger querying becomes necessary.
