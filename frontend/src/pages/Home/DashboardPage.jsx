@@ -49,7 +49,8 @@ function DashboardPage() {
         </article>
         <article className="summary-card">
           <p>Used</p>
-          <h3>{summary.percentUsed || 0}%</h3>
+          <h3>{summary.budget > 0 ? `${summary.percentUsed || 0}%` : 'N/A'}</h3>
+          <small>{summary.budget > 0 ? 'of monthly budget' : 'Set budgets below'}</small>
         </article>
         <article className="summary-card">
           <p>Top Expense</p>
@@ -57,6 +58,22 @@ function DashboardPage() {
           <small>{summary.topExpense?.title || 'No record this month'}</small>
         </article>
       </div>
+
+      <section className="panel category-total-panel">
+        <h3>Total Per Category</h3>
+        <div className="category-total-grid">
+          {categories.map((category) => {
+            const status = budgetStatusByCategory[category] || { total: 0, exceeded: false };
+
+            return (
+              <article key={category} className={status.exceeded ? 'category-total-item exceeded' : 'category-total-item'}>
+                <span>{category}</span>
+                <strong>{formatCurrency(status.total)}</strong>
+              </article>
+            );
+          })}
+        </div>
+      </section>
 
       <div className="dashboard-top-actions">
         <Link to="/add" className="action-link">Add New Expense</Link>
