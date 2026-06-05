@@ -131,9 +131,9 @@ npm run frontend:build
 
 The deployed app uses Vercel for the frontend and Render for the backend:
 
-- Backend: `render.yaml` deploys the Express API from the `backend` folder. Set `CLIENT_URL` to the deployed frontend URL.
+- Backend: `render.yaml` deploys the Express API from the `backend` folder. Render uses `CLIENT_URL=https://studio-graphene-mini-expense-tracke.vercel.app`.
 - Frontend: `frontend/vercel.json` supports React Router client-side routing on Vercel.
-- Frontend API URL: set `VITE_API_URL` to the deployed backend API base URL, for example `https://your-api.onrender.com/api`.
+- Frontend API URL: Vercel uses `VITE_API_URL=https://studio-graphene-mini-expense-tracker.onrender.com/api`.
 - Persistence: local JSON persistence is stored at `backend/data/expense-store.json`. Render free instances use an ephemeral filesystem, so use a persistent disk or move storage to SQLite/PostgreSQL if hosted data must survive redeploys.
 
 ## API Documentation
