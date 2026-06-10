@@ -102,6 +102,12 @@ test('expense API covers the assessment expense flow', async (t) => {
   assert.equal(paginatedResponse.body.expenses.length, 1);
   assert.equal(paginatedResponse.body.totalPages, 2);
 
+  const finalPageResponse = await request(server, '/api/expenses?page=999&limit=1');
+  assert.equal(finalPageResponse.status, 200);
+  assert.equal(finalPageResponse.body.page, 2);
+  assert.equal(finalPageResponse.body.expenses.length, 1);
+  assert.equal(finalPageResponse.body.expenses[0].title, 'Metro');
+
   const categoryFilterResponse = await request(server, '/api/expenses?category=Food');
   assert.equal(categoryFilterResponse.status, 200);
   assert.equal(categoryFilterResponse.body.total, 1);

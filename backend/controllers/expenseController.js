@@ -204,12 +204,13 @@ const getExpenses = async (req, res) => {
 
     const total = result.expenses.length;
     const totalPages = Math.ceil(total / limit) || 1;
-    const start = (page - 1) * limit;
+    const currentPage = Math.min(page, totalPages);
+    const start = (currentPage - 1) * limit;
 
     return res.status(200).json({
       expenses: result.expenses.slice(start, start + limit),
       total,
-      page,
+      page: currentPage,
       limit,
       totalPages,
     });
