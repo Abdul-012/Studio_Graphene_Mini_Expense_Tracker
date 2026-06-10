@@ -30,6 +30,12 @@ const sortExpenses = (expenses) =>
     return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
   });
 
+const normalizePaginationValue = (value, fallback, maximum = Infinity) => {
+  const parsed = Number(value);
+  if (!Number.isFinite(parsed) || parsed === 0) return fallback;
+  return Math.floor(Math.max(1, Math.min(maximum, parsed)));
+};
+
 const validateExpense = (body, { partial = false } = {}) => {
   const next = {};
 
@@ -187,8 +193,8 @@ const createExpense = async (req, res) => {
 
 const getExpenses = async (req, res) => {
   try {
-    const page = Math.max(1, Number(req.query.page) || 1);
-    const limit = Math.max(1, Math.min(100, Number(req.query.limit) || 10));
+    const page = normalizePaginationValue(req.query.page, 1);
+    const limit = normalizePaginationValue(req.query.limit, 10, 100);
     const store = await readStore();
     const result = filterExpenses(store.expenses, req.query);
 
@@ -198,12 +204,13 @@ const getExpenses = async (req, res) => {
 
     const total = result.expenses.length;
     const totalPages = Math.ceil(total / limit) || 1;
-    const start = (page - 1) * limit;
+    const currentPage = Math.min(page, totalPages);
+    const start = (currentPage - 1) * limit;
 
     return res.status(200).json({
       expenses: result.expenses.slice(start, start + limit),
       total,
-      page,
+      page: currentPage,
       limit,
       totalPages,
     });
